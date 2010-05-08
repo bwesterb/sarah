@@ -8,7 +8,7 @@ import os.path
 import logging
 import threading
 
-from sarah.socketserver import UnixSocketServer
+from sarah.socketServer import UnixSocketServer
 from sarah.io import IntSocketFile
 
 class HushFile(object):

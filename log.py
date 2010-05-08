@@ -6,7 +6,7 @@ import logging.handlers
 from mirte.core import Module
 from sarah.io import IntSocketFile
 from sarah.runtime import ExceptionCatchingWrapper
-from sarah.socketserver import UnixSocketServer
+from sarah.socketServer import UnixSocketServer
 
 class LogServer(UnixSocketServer):
 	class SocketHandler(logging.handlers.SocketHandler):
