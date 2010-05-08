@@ -1,6 +1,6 @@
 includes:
-  - selectPool.mirte
-  - threadPool.mirte
+  - selectPool
+  - threadPool
 definitions:
   socketServer:
     settings:

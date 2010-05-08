@@ -1,6 +1,6 @@
 includes:
-  - threadPool.mirte
-  - core.mirte
+  - threadPool
+  - socketServer
 definitions:
   shellServer:
     implementedBy: maried.shell.ShellServer

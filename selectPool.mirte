@@ -1,3 +1,5 @@
+includes:
+  - threadPool
 definitions:
   selectPool:
     implementedBy: maried.selectPool.SelectPool
