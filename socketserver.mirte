@@ -6,6 +6,7 @@ definitions:
     settings:
       selectPool: { type: selectPool }
       threadPool: { type: threadPool }
+      backlog: { type: int, default: 3 }
     run: true
   unixSocketServer:
     inherits: [ socketServer ]
