@@ -2,7 +2,7 @@ includes:
   - threadPool
 definitions:
   scheduler:
-    implementedBy: maried.scheduler.Scheduler
+    implementedBy: sarah.scheduler.Scheduler
     run: true
     settings:
         threadPool: {type: threadPool}

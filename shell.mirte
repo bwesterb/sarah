@@ -3,7 +3,7 @@ includes:
   - socketServer
 definitions:
   shellServer:
-    implementedBy: maried.shell.ShellServer
+    implementedBy: sarah.shell.ShellServer
     inherits: [ unixSocketServer ]
     settings:
       manager: {type: manager}

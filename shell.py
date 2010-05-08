@@ -8,8 +8,8 @@ import os.path
 import logging
 import threading
 
-from maried.core import Module, UnixSocketServer
-from maried.io import IntSocketFile
+from sarah.socketserver import UnixSocketServer
+from sarah.io import IntSocketFile
 
 class HushFile(object):
 	""" Wraps around a file, but hushes all errors """

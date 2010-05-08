@@ -2,8 +2,8 @@ includes:
   - threadPool
 definitions:
   logServer:
-    implementedBy: maried.log.LogServer
+    implementedBy: sarah.log.LogServer
     settings:
-      socketPath: {type: str, default: maried-log.socket}
+      socketPath: {type: str, default: log.socket}
       threadPool: {type: threadPool}
     run: True

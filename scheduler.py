@@ -1,6 +1,8 @@
 from __future__ import with_statement
 
-from maried.mirte import Event, Module
+from mirte.core import Module
+from sarah.event import Event
+
 from heapq import heappush, heappop
 
 import time

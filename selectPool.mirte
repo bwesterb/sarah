@@ -2,7 +2,7 @@ includes:
   - threadPool
 definitions:
   selectPool:
-    implementedBy: maried.selectPool.SelectPool
+    implementedBy: sarah.selectPool.SelectPool
     settings:
       threadPool: {type: threadPool}
     run: true

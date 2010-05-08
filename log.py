@@ -7,9 +7,9 @@ import logging
 import threading
 import logging.handlers
 
-from maried.core import Module
-from maried.io import IntSocketFile
-from maried.runtime import ExceptionCatchingWrapper
+from mirte.core import Module
+from sarah.io import IntSocketFile
+from sarah.runtime import ExceptionCatchingWrapper
 
 class LogServer(Module):
 	class SocketHandler(logging.handlers.SocketHandler):
