@@ -1,5 +1,3 @@
-includes:
-  - threadPool
 definitions:
   selectPool:
     implementedBy: sarah.selectPool.SelectPool
