@@ -59,7 +59,7 @@ class UnixSocketServer(SocketServer):
 			os.unlink(self.socketPath)
 		s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 		s.bind(self.socketPath)
-		s.listen(3)
+		s.listen(self.backlog)
 		return s
 
 class TCPSocketServer(SocketServer):

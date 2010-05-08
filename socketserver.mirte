@@ -6,14 +6,15 @@ definitions:
     settings:
       selectPool: { type: selectPool }
       threadPool: { type: threadPool }
-      backlog: { type: int, default: 3 }
     run: true
   unixSocketServer:
     inherits: [ socketServer ]
     settings:
       socketPath: { type: str }
+      backlog: { type: int, default: 3 }
   tcpSocketServer:
     inherits: [ socketServer ]
     settings:
       host: { type: str, default: 0.0.0.0 }
       port: { type: str }
+      backlog: { type: int, default: 3 }
