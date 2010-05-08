@@ -7,3 +7,4 @@ definitions:
     inherits: [ unixSocketServer ]
     settings:
       manager: {type: manager}
+      socketPath: {default: shell.socket}
