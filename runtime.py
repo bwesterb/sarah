@@ -29,3 +29,17 @@ class ExceptionCatchingWrapper(object):
 		wrapped = object.__getattribute__(self, '_wrapped')
 		delattr(wrapped, name)
 
+def _get_by_path(bits, _globals):
+	c = None
+	for i, bit in enumerate(bits):
+		try:
+			c = globals()[bit] if c is None else getattr(c, bit)
+		except (AttributeError, KeyError):
+			c = __import__('.'.join(bits[:i+1]), _globals,
+				fromlist=[bits[i+1]] if i+1 < len(bits) else [])
+	return c
+
+def get_by_path(path, _globals=None):
+	""" Returns an object by <path>, importing modules if necessary """
+	if _globals is None: _globals = list()
+	return _get_by_path(path.split('.'), _globals)
