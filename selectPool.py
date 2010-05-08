@@ -18,6 +18,29 @@ class SelectPool(Module):
 		self.sp = socket.socketpair()
 		self.lut = (dict(), dict(), dict())
 		self.rlut = dict()
+		self.events = set()
+	
+	def select(self, rs=None, ws=None, xs=None):
+		event = threading.Event()
+		ret = [None]
+		ss = [[] if _s is None else _s for _s in (rs, ws, xs)]
+		def callback(rs, ws, xs):
+			ret[0] = (rs, ws, xs)
+			event.set()
+			return False
+		with self.lock:
+			self.events.add(event)
+			for i in xrange(3):
+				for s in ss[i]:
+					self.__register(s, i, callback)
+			self._interrupt()
+		event.wait()
+		with self.lock:
+			self.events.remove(event)
+			for i in xrange(3):
+				for s in ss[i]:
+					self.__deregister(s, i)
+		return ((), (), ()) if ret[0] is None else ret[0]
 	
 	def register(self, callback, rs=None, ws=None, xs=None):
 		def outer_callback(rs, ws, xs):
@@ -117,6 +140,8 @@ class SelectPool(Module):
 		with self.lock:
 			self.running = False
 			self._interrupt()
+			for event in self.events:
+				event.set()
 	
 	def interrupt(self):
 		with self.lock:
