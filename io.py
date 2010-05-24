@@ -163,3 +163,27 @@ class IntSocketFile(object):
 		pass
 	def makefile(self, mode=None, bufsize=None):
 		return self
+
+class SocketPairWrappedFile(object):
+	""" Wraps around a file like object with a socket pair.  This gives
+	    any file() like object a fileno().  The current implementation
+	    is quite limited.  This object needs a worker thread.  Call run
+	    in a separate thread.  """
+	def __init__(self, f):
+		self.f = f
+		self.sp = socket.socketpair()
+	def fileno(self):
+		return self.sp[1].fileno()
+	def run(self):
+		while True:
+			tmp = self.f.read(2048)
+			if tmp == '':
+				break
+			to_send = len(tmp)
+			while to_send > 0:
+				sent = self.sp[0].send(tmp)
+				tmp = tmp[sent:]
+				to_send -= sent
+	def close(self):
+		self.sp[0].close()
+		self.sp[1].close()
