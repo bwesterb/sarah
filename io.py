@@ -184,6 +184,7 @@ class SocketPairWrappedFile(object):
 				sent = self.sp[0].send(tmp)
 				tmp = tmp[sent:]
 				to_send -= sent
+		self.sp[0].close()
 	def close(self):
 		self.sp[0].close()
 		self.sp[1].close()
