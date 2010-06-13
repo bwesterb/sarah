@@ -1,0 +1,9 @@
+includes:
+ - socketServer
+definitions:
+  cometServer:
+    inherits: [ tcpSocketServer ]
+    settings:
+      port: {default: 8080}
+      timeout: {type: float, default: 2}
+      threadPool: {type: threadPool}
