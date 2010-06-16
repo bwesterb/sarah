@@ -1,5 +1,5 @@
 includes:
- - socketServer
+ - ../socketServer
 definitions:
   cometServer:
     inherits: [ tcpSocketServer ]
