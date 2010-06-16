@@ -58,6 +58,25 @@ class AliasingMixin(object):
 		if name in type(self).aliases:
 			name = type(self).aliases[name]
 		del self._data[name]
+	def _generate_reverse_aliases(self):
+		ass = type(self).aliases
+		rass = {}
+		for k, v in ass.iteritems():
+			rass[v] = k
+		type(self).reverse_aliases = rass
+	def to_unaliased_dict(self):
+		if not hasattr(type(self), 'reverse_aliases'):
+			self._generate_reverse_aliases()
+		lut = type(self).reverse_aliases
+		d = {}
+		for k, v in self._data.iteritems():
+			if k in lut:
+				k = lut[k]
+			d[k] = v
+		return d
+	def __repr__(self):
+		return "%s(%s)" % (self.__class__.__name__, repr(
+			self.to_unaliased_dict()))
 
 class AliasingDictLike(AliasingMixin, DictLike):
 	""" A DictLike where keys have aliases provided by __class__.aliases
