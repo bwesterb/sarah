@@ -54,11 +54,14 @@ class CometRH(BaseHTTPRequestHandler):
 		self._dispatch_request(self.rfile.read(
 			int(self.headers['Content-Length'])))
 	def _dispatch_request(self, v):
-		try:
-			d = json.loads(v)
-		except ValueError:
-			self._respond_simple(400, 'Malformed JSON')
-			return
+		if v == '':
+			d = None
+		else:
+			try:
+				d = json.loads(v)
+			except ValueError:
+				self._respond_simple(400, 'Malformed JSON')
+				return
 		self.server.dispatch_message(d, self)
 	def _respond_simple(self, code, message):
 		self.send_response(code)
@@ -101,7 +104,8 @@ class BaseCometSession(object):
 				self._set_timeout(int(time.time() +
 						self.server.timeout))
 			self.rh = rh
-		self.handle_message(data)
+		if len(data) > 1:
+			self.handle_message(data)
 	def handle_message(self, data):
 		pass
 	def on_timeout(self, timeout):
@@ -154,6 +158,8 @@ class CometServer(TCPSocketServer):
 					self.sessions[_try] = None
 					return _try
 	def dispatch_message(self, d, rh):
+		if d is None:
+			d = {}
 		if not isinstance(d, dict):
 			rh._respond_simple(400, 'Message isn\'t dict')
 			return
