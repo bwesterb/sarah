@@ -33,18 +33,16 @@ class DictLike(object):
 	def __repr__(self):
 		return "%s(%s)" % (self.__class__.__name__, repr(self._data))
 
-class AliasingDictLike(DictLike):
-	""" A DictLike where keys have aliases provided by __class__.aliases
-	"""
+class AliasingMixin(object):
 	aliases = {}
-	def __init__(self, data):
+	def normalize_dict(self, data):
 		_data = {}
 		aliases = type(self).aliases
 		for k, v in data.iteritems():
 			if k in aliases:
 				k = aliases[k]
 			_data[k] = v
-		super(AliasingDictLike, self).__init__(_data)
+		return _data
 	def __getattr__(self, name):
 		if name in type(self).aliases:
 			name = type(self).aliases[name]
@@ -60,3 +58,10 @@ class AliasingDictLike(DictLike):
 		if name in type(self).aliases:
 			name = type(self).aliases[name]
 		del self._data[name]
+
+class AliasingDictLike(AliasingMixin, DictLike):
+	""" A DictLike where keys have aliases provided by __class__.aliases
+	"""
+	def __init__(self, data):
+		super(AliasingDictLike, self).__init__(
+				self.normalize_dict(data))
