@@ -1,8 +1,24 @@
+import weakref
+
+class Self(object):
+	def __init__(self, wrapped):
+		object.__setattr__(self, '_wrapped', weakref.ref(wrapped))
+	def __getattribute__(self, name):
+		object.__getattribute__(object.__getattribute__(
+			self, '_wrapped')(), name)
+	def __setattr__(self, name, value):
+		object.__setattr__(object.__getattribute__(
+			self, '_wrapped')(), name, value)
+	def __delattr__(self, name):
+		object.__delattr__(object.__getattribute__(
+			self, '_wrapped')(), name)
+
 class DictLike(object):
 	""" Base class for a dictionary based object.
 	    Think about wrappers around JSON data. """
 	def __init__(self, data):
-		object.__setattr__(self, '_data', data)
+		object.__setattr__(self, 'self', Self(self))
+		self.self._data = data
 	def __getattr__(self, name):
 		try:
 			return self._data[name]
