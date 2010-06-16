@@ -36,7 +36,7 @@ class DictLike(object):
 class AliasingDictLike(DictLike):
 	""" A DictLike where keys have aliases provided by __class__.aliases
 	"""
-	aliases = {'a':'aaa'}
+	aliases = {}
 	def __init__(self, data):
 		_data = {}
 		aliases = type(self).aliases
