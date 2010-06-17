@@ -95,7 +95,7 @@ class BaseCometSession(object):
 				self.server.remove_timeout(self.timeout, self)
 			self.server.add_timeout(timeout, self)
 			self.timeout = timeout
-	def _handle_message(self, rh, data):
+	def _handle_message(self, rh, data, direct_return):
 		self.l.debug("< %s" % data)
 		with self.lock:
 			if not self.rh is None:
@@ -104,6 +104,8 @@ class BaseCometSession(object):
 				self._set_timeout(int(time.time() +
 						self.server.timeout))
 			self.rh = rh
+			if direct_return:
+				self.__flush()
 		if len(data) > 1:
 			self.handle_message(data)
 	def handle_message(self, data):
@@ -158,7 +160,9 @@ class CometServer(TCPSocketServer):
 					self.sessions[_try] = None
 					return _try
 	def dispatch_message(self, d, rh):
+		direct_return = False
 		if d is None:
+			direct_return = True
 			d = {}
 		if not isinstance(d, dict):
 			rh._respond_simple(400, 'Message isn\'t dict')
@@ -170,7 +174,7 @@ class CometServer(TCPSocketServer):
 					self.sessions[d['s']] is None:
 				self.sessions[d['s']] = \
 						BaseCometSession(self, d['s'])
-		self.sessions[d['s']]._handle_message(rh, d)
+		self.sessions[d['s']]._handle_message(rh, d, direct_return)
 
 	def create_handler(self, con, addr, logger):
 		return CometRHWrapper(con, addr, self, logger)
