@@ -173,7 +173,7 @@ class CometServer(TCPSocketServer):
 			if not d['s'] in self.sessions or \
 					self.sessions[d['s']] is None:
 				self.sessions[d['s']] = \
-						BaseCometSession(self, d['s'])
+					self.session_class(self, d['s'])
 		self.sessions[d['s']]._handle_message(rh, d, direct_return)
 
 	def create_handler(self, con, addr, logger):

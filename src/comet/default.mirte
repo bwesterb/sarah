@@ -7,3 +7,10 @@ definitions:
       port: {default: 8080}
       timeout: {type: float, default: 2}
       threadPool: {type: threadPool}
+  cometClient:
+    run: true
+    settings:
+      threadPool: {type: threadPool}
+      host: {type: str}
+      path: {type: str, default: "/"}
+      port: {type: int, default: 8080}
