@@ -5,8 +5,8 @@ import threading
 from mirte.core import Module
 
 class CometClient(Module):
-	def __init__(self, settings, l):
-		super(CometClient, self).__init__(settings, l)
+	def __init__(self, *args, **kwargs):
+		super(CometClient, self).__init__(*args, **kwargs)
 		self.cond_in = threading.Condition()
 		self.cond_out = threading.Condition()
 		self.running = False

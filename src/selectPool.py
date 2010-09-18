@@ -11,8 +11,8 @@ import threading
 class SelectPool(Module):
 	""" Pools select (2) calls in one call and adds convencience
 	    functionality """
-	def __init__(self, settings, logger):
-		super(SelectPool, self).__init__(settings, logger)
+	def __init__(self, *args, **kwargs):
+		super(SelectPool, self).__init__(*args, **kwargs)
 		self.running = True
 		self.lock = threading.Lock()
 		self.sp = socket.socketpair()

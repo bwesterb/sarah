@@ -20,8 +20,8 @@ class Scheduler(Module):
 		def __cmp__(self, other):
 			return cmp(self.time, other.time)
 
-	def __init__(self, settings, logger):
-		super(Scheduler, self).__init__(settings, logger)
+	def __init__(self, *args, **kwargs):
+		super(Scheduler, self).__init__(*args, **kwargs)
 		self.running = True
 		self.sp = socket.socketpair()
 		self.queue = []

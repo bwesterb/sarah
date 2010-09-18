@@ -7,8 +7,8 @@ import threading
 from mirte.core import Module
 
 class SocketServer(Module):
-	def __init__(self, settings, logger):
-		super(SocketServer, self).__init__(settings, logger)
+	def __init__(self, *args, **kwargs):
+		super(SocketServer, self).__init__(*args, **kwargs)
 		self.lock = threading.Lock()
 		self.running = False
 		self.handlers = set()

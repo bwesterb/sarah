@@ -109,7 +109,7 @@ class BaseCometSession(object):
 		if len(data) > 1:
 			self.handle_message(data)
 	def handle_message(self, data):
-		pass
+		raise NotImplemented
 	def on_timeout(self, timeout):
 		with self.lock:
 			if timeout != self.timeout:
@@ -142,12 +142,11 @@ class BaseCometSession(object):
 			self.l.exception("Exception while flushing")
 
 class CometServer(TCPSocketServer):
-	def __init__(self, settings, logger, session_class):
+	def __init__(self, *args, **kwargs):
+		super(CometServer, self).__init__(*args, **kwargs)
 		self.sessions = {}
 		self.lock = threading.Lock()
 		self.timeout_lut = dict()
-		self.session_class = session_class
-		super(CometServer, self).__init__(settings, logger)
 	def send_message(self, d):
 		with self.lock:
 			for s in self.sessions.itervalues():
@@ -173,9 +172,10 @@ class CometServer(TCPSocketServer):
 			if not d['s'] in self.sessions or \
 					self.sessions[d['s']] is None:
 				self.sessions[d['s']] = \
-					self.session_class(self, d['s'])
+						self.create_session(d['s'])
 		self.sessions[d['s']]._handle_message(rh, d, direct_return)
-
+	def create_session(self, token):
+		raise NotImplemented
 	def create_handler(self, con, addr, logger):
 		return CometRHWrapper(con, addr, self, logger)
 	def remove_timeout(self, timeout, session):
