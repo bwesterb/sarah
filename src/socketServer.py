@@ -39,10 +39,14 @@ class SocketServer(Module):
 			if not self.running:
 				return
 			self.handlers.add(handler)
-		handler.handle()
-		with self.lock:
-			self.handlers.remove(handler)
-		handler.cleanup()
+		try:
+			handler.handle()
+		except Exception:
+			self.l.exception("Uncatched exception")
+		finally:
+			with self.lock:
+				self.handlers.remove(handler)
+			handler.cleanup()
 	def stop(self):
 		with self.lock:
 			assert self.running
