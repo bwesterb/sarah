@@ -58,7 +58,8 @@ class SelectPool(Module):
 			for i in xrange(3):
 				for s in ss[i]:
 					self.__deregister(s, i)
-			self.threadPool.execute(outer_callback, rs, ws, xs)
+			self.threadPool.execute_named(outer_callback, 
+					'selectPool outer_callback', rs, ws, xs)
 		ss = [[] if _s is None else _s for _s in (rs, ws, xs)]
 		with self.lock:
 			for i in xrange(3):

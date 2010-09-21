@@ -28,8 +28,10 @@ class SocketServer(Module):
 		with self.lock:
 			con, addr = self.socket.accept()
 			self.n_conn += 1
-			self.threadPool.execute(self._handle_connection,
-					con, addr, self.n_conn)
+			self.threadPool.execute_named(self._handle_connection,
+					'%s _handle_connection %s' % (self.name,
+						self.n_conn), con, addr,
+						self.n_conn)
 		return True
 	def _handle_connection(self, con, addr, n_conn):
 		l = logging.getLogger("%s.%s" % (self.l.name, n_conn))

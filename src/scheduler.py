@@ -61,7 +61,8 @@ class Scheduler(Module):
 		self.lock.release()
 	
 	def _stage(self, event):
-		self.threadPool.execute(self._sleep_for, event, time.time())
+		self.threadPool.execute_named(self._sleep_for,
+				'scheduler _sleep_for', event, time.time())
 	
 	def _sleep_for(self, event, staged_at):
 		self.gap = .2 * 10 * (time.time() - staged_at) + .8 * self.gap
