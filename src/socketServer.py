@@ -29,9 +29,9 @@ class SocketServer(Module):
 			con, addr = self.socket.accept()
 			self.n_conn += 1
 			self.threadPool.execute_named(self._handle_connection,
-					'%s _handle_connection %s' % (self.name,
-						self.n_conn), con, addr,
-						self.n_conn)
+					'%s _handle_connection %s' % (
+						self.l.name, self.n_conn),
+						con, addr, self.n_conn)
 		return True
 	def _handle_connection(self, con, addr, n_conn):
 		l = logging.getLogger("%s.%s" % (self.l.name, n_conn))
