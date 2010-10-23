@@ -103,13 +103,22 @@ class IntSocketFile(object):
 			ret += tmp
 			to_read -= len(tmp)
 		return ret
-	def readline(self):
+	def readline(self, size=0):
 		ret = ''
-		bit = self.read_buffer
-		self.read_buffer = ''
+		to_read = size if size > 0 else None
+		if to_read is None:
+			bit = self.read_buffer
+			self.read_buffer = ''
+		else:
+			bit = self.read_buffer[:to_read]
+			self.read_buffer = self.read_buffer[to_read:]
 		while self.running:
+			if not to_read is None:
+				to_read -= len(bit)
 			if not "\n" in bit:
 				ret += bit
+				if not to_read is None and to_read <= 0:
+					return ret
 			else:
 				bit, rem = bit.split("\n", 1)
 				ret += bit + "\n"
@@ -126,7 +135,9 @@ class IntSocketFile(object):
 				raise IOError
 			if not self.socket in rlist:
 				continue
-			bit = self.socket.recv(1024)
+			buffer_size = min(1024, 1024 if to_read is None
+						else to_read)
+			bit = self.socket.recv(buffer_size)
 			if len(bit) == 0:
 				raise IOError
 		return ''
