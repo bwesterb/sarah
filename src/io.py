@@ -199,3 +199,13 @@ class SocketPairWrappedFile(object):
 	def close(self):
 		self.sp[0].close()
 		self.sp[1].close()
+
+
+def pump(fin, fout):
+	""" Reads data from <fin> and writes it to <fout> until EOF is
+	    reached. """
+	while True:
+		tmp = fin.read(4096)
+		if not tmp:
+			break
+		fout.write(tmp)
