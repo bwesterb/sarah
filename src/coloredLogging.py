@@ -2,17 +2,13 @@
 
 import logging
 
-BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
-
 RESET_SEQ = "\033[0m"
-COLOR_SEQ = "\033[1;%dm"
 
 LEVEL_COLORS = {
-	'WARNING': YELLOW,
-	'INFO': WHITE,
-	'DEBUG': BLUE,
-	'CRITICAL': YELLOW,
-	'ERROR': RED
+	'WARNING': ("\033[1;33m", "\033[0m"),
+	'DEBUG': ("\033[36m", "\033[0m"),
+	'CRITICAL': ("\033[1;31m", "\033[0m"),
+	'ERROR': ("\033[31m", "\033[0m")
 }
 
 class ColoredFormatter(logging.Formatter):
@@ -20,12 +16,10 @@ class ColoredFormatter(logging.Formatter):
 		logging.Formatter.__init__(self, frm)
 	def format(self, record):
 		levelname = record.levelname
+		pref, suf = '', ''
 		if levelname in LEVEL_COLORS:
-			levelname = (COLOR_SEQ % (30 +
-					LEVEL_COLORS[levelname]) +
-						levelname + RESET_SEQ)
-			record.levelname = levelname
-		return logging.Formatter.format(self, record)
+			pref, suf = LEVEL_COLORS[levelname]
+		return pref+logging.Formatter.format(self, record)+suf
 
 def basicConfig(format="%(levelname)s %(name)s %(message)s",
 		level=logging.DEBUG):
