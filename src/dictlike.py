@@ -35,9 +35,10 @@ class DictLike(object):
 
 class AliasingMixin(object):
 	aliases = {}
-	def normalize_dict(self, data):
+        @classmethod
+	def normalize_dict(cls, data):
 		_data = {}
-		aliases = type(self).aliases
+		aliases = cls.aliases
 		for k, v in data.iteritems():
 			if k in aliases:
 				k = aliases[k]
