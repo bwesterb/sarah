@@ -6,6 +6,9 @@ class CappedReadFile(object):
 		self.f = f
                 self.autoclose = autoclose
 		self.left = cap
+        def close(self):
+                self.left = 0
+                self.f.close()
 	def read(self, n):
 		if n <= self.left:
 			self.left -= n
