@@ -7,7 +7,7 @@ import weakref
 import threading
 
 class RefStore(Module):
-	def __init__(self, *args, **kwargs):
+        def __init__(self, *args, **kwargs):
                 super(RefStore, self).__init__(*args, **kwargs)
                 self.namespaces = weakref.WeakSet()
         def create_namespace(self):
@@ -16,7 +16,7 @@ class RefStore(Module):
                 return ret
 
 class NameSpace(object):
-	def __init__(self):
+        def __init__(self):
                 self.obj_to_key = weakref.WeakKeyDictionary()
                 self.key_to_obj = weakref.WeakValueDictionary()
                 self.lock = threading.Lock()

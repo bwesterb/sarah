@@ -1,6 +1,6 @@
 
 def pick(iterable):
-	return iter(iterable).next()
+        return iter(iterable).next()
 
 def iter_by_n(iterable, n):
         ret = []
