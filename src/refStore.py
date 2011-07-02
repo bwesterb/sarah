@@ -6,10 +6,17 @@ from sarah.event import Event
 import weakref
 import threading
 
+# python 2.6 support
+if hasattr(weakref, 'WeakSet'):
+        WeakSet = weakref.WeakSet
+else:
+        import weakrefset
+        WeakSet = weakrefset.WeakSet
+
 class RefStore(Module):
         def __init__(self, *args, **kwargs):
                 super(RefStore, self).__init__(*args, **kwargs)
-                self.namespaces = weakref.WeakSet()
+                self.namespaces = WeakSet()
         def create_namespace(self):
                 ret = NameSpace()
                 self.namespaces.add(ret)
