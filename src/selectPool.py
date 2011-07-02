@@ -47,7 +47,7 @@ class SelectPool(Module):
                         try:
                                 ret = callback(rs, ws, xs)
                         except Exception:
-                                self.l.exception("Uncatched exception")
+                                self.l.exception("Uncaught exception")
                         if not ret:
                                 return
                         for i in xrange(3):
@@ -135,7 +135,7 @@ class SelectPool(Module):
                         try:
                                 cb(*lists)
                         except Exception:
-                                self.l.exception("Uncatched exception")
+                                self.l.exception("Uncaught exception")
 
         def stop(self):
                 with self.lock:

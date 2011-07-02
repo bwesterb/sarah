@@ -44,7 +44,7 @@ class SocketServer(Module):
                 try:
                         handler.handle()
                 except Exception:
-                        self.l.exception("Uncatched exception")
+                        self.l.exception("Uncaught exception")
                 finally:
                         with self.lock:
                                 self.handlers.remove(handler)
