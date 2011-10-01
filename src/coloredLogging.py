@@ -12,19 +12,25 @@ LEVEL_COLORS = {
 }
 
 class ColoredFormatter(logging.Formatter):
-        def __init__(self, frm):
-                logging.Formatter.__init__(self, frm)
+        def __init__(self, parent):
+                logging.Formatter.__init__(self, None)
+                self.parent = parent
         def format(self, record):
                 levelname = record.levelname
                 pref, suf = '', ''
                 if levelname in LEVEL_COLORS:
                         pref, suf = LEVEL_COLORS[levelname]
-                return pref+logging.Formatter.format(self, record)+suf
+                return pref+self.parent.format(record)+suf
 
-def basicConfig(format="%(levelname)s %(name)s %(message)s",
+def basicConfig(format=None,
+                formatter=None,
                 level=logging.DEBUG):
-        formatter = ColoredFormatter(format)
+        if formatter is None:
+                if format is None:
+                        format = "%(levelname)s %(name)s %(message)s"
+                formatter = logging.Formatter(format)
+        ourFormatter = ColoredFormatter(formatter)
         handler = logging.StreamHandler()
-        handler.setFormatter(formatter)
+        handler.setFormatter(ourFormatter)
         logging.root.addHandler(handler)
         logging.root.setLevel(level)
