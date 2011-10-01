@@ -34,7 +34,7 @@ class SocketServer(Module):
                                                 con, addr, self.n_conn)
                 return True
         def _handle_connection(self, con, addr, n_conn):
-                l = logging.getLogger("%s.%s" % (self.l.name, n_conn))
+                l = logging.LoggerAdapter(self.l, {'sid': n_conn})
                 l.info("Accepted connection from %s" % repr(addr))
                 handler = self.create_handler(con, addr, l)
                 with self.lock:
