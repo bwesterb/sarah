@@ -14,5 +14,5 @@ setup(name='sarah',
       zip_safe=False,
       package_dir={'sarah': 'src'},
       install_requires = ['docutils>=0.3',
-                          'mirte>=0.1.0a2'],
+                          'mirte>=0.1.0a3'],
       )
