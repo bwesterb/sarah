@@ -27,5 +27,5 @@ setup(name='sarah',
       package_dir={'sarah': 'src'},
       package_data={'sarah': find_package_data()},
       install_requires = ['docutils>=0.3',
-                          'mirte>=0.1.1'],
+                          'mirte>=0.1.2'],
       )
