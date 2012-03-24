@@ -72,3 +72,4 @@ def get_by_path(path, _globals=None):
         """ Returns an object by <path>, importing modules if necessary """
         if _globals is None: _globals = list()
         return _get_by_path(path.split('.'), _globals)
+# vim: et:sta:bs=2:sw=4:

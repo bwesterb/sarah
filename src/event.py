@@ -1,8 +1,9 @@
 class Event(object):
-        def __init__(self):
-                self.handlers = []
-        def register(self, handler):
-                self.handlers.append(handler)
-        def __call__(self, *args, **kwargs):
-                for handler in self.handlers:
-                        handler(*args, **kwargs)
+    def __init__(self):
+        self.handlers = []
+    def register(self, handler):
+        self.handlers.append(handler)
+    def __call__(self, *args, **kwargs):
+        for handler in self.handlers:
+            handler(*args, **kwargs)
+# vim: et:sta:bs=2:sw=4:

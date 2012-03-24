@@ -29,3 +29,5 @@ setup(name='sarah',
       install_requires = ['docutils>=0.3',
                           'mirte>=0.1.2'],
       )
+
+# vim: et:sta:bs=2:sw=4:
