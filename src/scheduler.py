@@ -29,13 +29,21 @@ class Scheduler(Module):
         self.gap = 0.0
         # estimated oversleep on time.sleep
         self.delay = 0.0
+        self.n_calibration_calls = 0
         self.lock = threading.Lock()
 
     def _calibrate(self, staged_at):
         diff = time.time() - staged_at
+        self.n_calibration_calls += 1
         if abs(diff) < self.calibration_goal:
+            self.l.info(('calibration done: try: %s; diff: %s < %s; delay: %s;'+
+                            ' gap: %s')%(self.n_calibration_calls, diff,
+                                self.calibration_goal, self.delay, self.gap))
             return
-        self.l.info('Calibration diff: %s' % diff)
+        if self.n_calibration_calls % 20 == 0:
+            self.l.info(('calibration: try: %s; diff: %s >= %s; delay: %s;'+
+                            ' gap: %s')%(self.n_calibration_calls, diff,
+                                self.calibration_goal, self.delay, self.gap))
         next = time.time() + self.calibration_delay
         self.plan(next, self._calibrate, next)
 
