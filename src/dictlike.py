@@ -1,4 +1,5 @@
 import weakref
+import json
 
 class Self(object):
     def __init__(self, wrapped):
@@ -31,7 +32,8 @@ class DictLike(object):
     def to_dict(self):
         return self._data
     def __repr__(self):
-        return "%s(%s)" % (self.__class__.__name__, repr(self._data))
+        return "%s(%s)" % (self.__class__.__name__,
+                        json.dumps(self._data).encode('utf-8'))
 
 class AliasingMixin(object):
     aliases = {}
@@ -76,8 +78,8 @@ class AliasingMixin(object):
             d[k] = v
         return d
     def __repr__(self):
-        return "%s(%s)" % (self.__class__.__name__, repr(
-            self.to_unaliased_dict()))
+        return "%s(%s)" % (self.__class__.__name__, json.dumps(
+            self.to_unaliased_dict()).encode('utf-8'))
 
 class AliasingDictLike(AliasingMixin, DictLike):
     """ A DictLike where keys have aliases provided by __class__.aliases
