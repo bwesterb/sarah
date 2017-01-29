@@ -26,7 +26,7 @@ with open(os.path.join(base_path, 'README.rst')) as f:
 
 
 setup(name='sarah',
-      version='0.1.4',
+      version='0.1.5.dev0',
       description='Library with miscellaneous functionality',
       long_description=long_description,
       author='Bas Westerbaan',
