@@ -19,9 +19,17 @@ def find_package_data():
     return r
 
 
+base_path = os.path.dirname(os.path.abspath(__file__))
+
+with open(os.path.join(base_path, 'README.rst')) as f:
+    with open(os.path.join(base_path, 'CHANGES.rst')) as g:
+        long_description = '{0}\n{1}'.format(f.read(), g.read())
+
+
 setup(name='sarah',
       version=get_git_version(),
       description='Library with miscellaneous functionality',
+      long_description=long_description,
       author='Bas Westerbaan',
       author_email='bas@westerbaan.name',
       url='http://github.com/bwesterb/sarah/',
