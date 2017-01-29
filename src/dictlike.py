@@ -1,6 +1,8 @@
 import weakref
 import json
 
+import six
+
 
 class Self(object):
 
@@ -55,7 +57,7 @@ class AliasingMixin(object):
     def normalize_dict(cls, data):
         _data = {}
         aliases = cls.aliases
-        for k, v in data.iteritems():
+        for k, v in six.iteritems(data):
             if k in aliases:
                 k = aliases[k]
             _data[k] = v
@@ -82,7 +84,7 @@ class AliasingMixin(object):
     def _generate_reverse_aliases(self):
         ass = type(self).aliases
         rass = {}
-        for k, v in ass.iteritems():
+        for k, v in six.iteritems(ass):
             rass[v] = k
         type(self).reverse_aliases = rass
 
@@ -91,7 +93,7 @@ class AliasingMixin(object):
             self._generate_reverse_aliases()
         lut = type(self).reverse_aliases
         d = {}
-        for k, v in self._data.iteritems():
+        for k, v in six.iteritems(self._data):
             if k in lut:
                 k = lut[k]
             d[k] = v

@@ -7,3 +7,4 @@ sarah Changelog
 - Use zest.releaser
 - Add stub README
 - PEP8
+- Python3 support

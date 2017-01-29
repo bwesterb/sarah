@@ -38,7 +38,8 @@ setup(name='sarah',
       package_dir={'sarah': 'src'},
       package_data={'sarah': find_package_data()},
       install_requires=['docutils>=0.3',
-                        'mirte>=0.1.2'],
+                        'mirte>=0.1.2',
+                        'six>=1.2'],
       )
 
 # vim: et:sta:bs=2:sw=4:

@@ -1,8 +1,8 @@
-from __future__ import with_statement
-
 import sys
 import code
 import logging
+
+import six
 
 from sarah.socketServer import UnixSocketServer
 from sarah.io import IntSocketFile
@@ -106,7 +106,7 @@ class ShellServer(UnixSocketServer):
 
     def create_handler(self, con, addr, logger):
         locals = {'manager': self.manager}
-        for k, ii in self.manager.insts.iteritems():
+        for k, ii in six.iteritems(self.manager.insts):
             locals[k] = ii.object
         console = SockConsole(con, locals)
         return console

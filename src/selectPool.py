@@ -1,5 +1,8 @@
 from mirte.core import Module
 
+from six.moves import range
+import six
+
 import select
 import socket
 import threading
@@ -29,14 +32,14 @@ class SelectPool(Module):
             return False
         with self.lock:
             self.events.add(event)
-            for i in xrange(3):
+            for i in range(3):
                 for s in ss[i]:
                     self.__register(s, i, callback)
             self._interrupt()
         event.wait()
         with self.lock:
             self.events.remove(event)
-            for i in xrange(3):
+            for i in range(3):
                 for s in ss[i]:
                     self.__deregister(s, i)
         return ((), (), ()) if ret[0] is None else ret[0]
@@ -49,13 +52,13 @@ class SelectPool(Module):
                 self.l.exception("Uncaught exception")
             if not ret:
                 return
-            for i in xrange(3):
+            for i in range(3):
                 for s in ss[i]:
                     self.__register(s, i, inner_callback)
             self.interrupt()
 
         def inner_callback(rs, ws, xs):
-            for i in xrange(3):
+            for i in range(3):
                 for s in ss[i]:
                     self.__deregister(s, i)
             self.threadPool.execute_named(
@@ -67,7 +70,7 @@ class SelectPool(Module):
             )
         ss = [[] if _s is None else _s for _s in (rs, ws, xs)]
         with self.lock:
-            for i in xrange(3):
+            for i in range(3):
                 for s in ss[i]:
                     self.__register(s, i, inner_callback)
             self._interrupt()
@@ -83,7 +86,7 @@ class SelectPool(Module):
     def deregister(self, rs=None, ws=None, xs=None):
         ss = [[] if _s is None else _s for _s in (rs, ws, xs)]
         with self.lock:
-            for i in xrange(3):
+            for i in range(3):
                 for s in ss[i]:
                     self.__deregister(s, i)
 
@@ -108,9 +111,9 @@ class SelectPool(Module):
         self.lock.release()
 
     def run__inner_loop(self):
-        ri = self.lut[0].keys()
-        wi = self.lut[1].keys()
-        xi = self.lut[2].keys()
+        ri = list(six.iterkeys(self.lut[0]))
+        wi = list(six.iterkeys(self.lut[1]))
+        xi = list(six.iterkeys(self.lut[2]))
         self.lock.release()
         ret = None
         try:
@@ -124,7 +127,7 @@ class SelectPool(Module):
         if ret is None:
             return
         todo = dict()
-        for i in xrange(3):
+        for i in range(3):
             for f in ret[i]:
                 if i == 0 and f == self.sp[1]:
                     self.sp[1].recv(4096)
@@ -136,7 +139,7 @@ class SelectPool(Module):
                 if cb not in todo:
                     todo[cb] = (list(), list(), list())
                 todo[cb][i].append(f)
-        for cb, lists in todo.iteritems():
+        for cb, lists in six.iteritems(todo):
             try:
                 cb(*lists)
             except Exception:

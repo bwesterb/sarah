@@ -1,3 +1,5 @@
+from six.moves import range
+
 try:
     import carah.string as _string
 except ImportError:
@@ -12,6 +14,6 @@ else:
 
 def from_hex(s):
     return ''.join((chr(int(s[2 * i:2 * (i + 1)], 16))
-                    for i in xrange(len(s) / 2)))
+                    for i in range(len(s) / 2)))
 
 # vim: et:sta:bs=2:sw=4:

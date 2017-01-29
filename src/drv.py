@@ -2,6 +2,8 @@ import math
 import random
 import time
 
+from six.moves import range
+
 
 class DiscreteRandomVariable(object):
     """ Simulates a Discrete Random Variable """
@@ -71,20 +73,20 @@ if __name__ == '__main__':
     ne = 100000
     nt = 10000
     values = [(random.uniform(0, 10), random.uniform(0, 10))
-              for i in xrange(ne)]
+              for i in range(ne)]
     drv = DiscreteRandomVariable(values)
     drva = DiscreteRandomVariable_alt(values)
 
-    print "Starting.."
+    print("Starting..")
     bt = time.time()
-    for i in xrange(nt):
+    for i in range(nt):
         drv.pick()
-    print (time.time() - bt) / float(nt)
+    print((time.time() - bt) / float(nt))
 
     bt = time.time()
-    for i in xrange(nt):
+    for i in range(nt):
         drva.pick()
-    print (time.time() - bt) / float(nt)
+    print((time.time() - bt) / float(nt))
 
 
 # vim: et:sta:bs=2:sw=4:

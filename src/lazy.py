@@ -2,6 +2,8 @@
 
 import sys
 
+import six
+
 
 def lazy(func):
     """ Decorator, which can be used for lazy imports
@@ -16,7 +18,8 @@ def lazy(func):
         _locals = None
     else:
         _locals = frame.f_locals
-    return LazyStub(func.func_name, func, _locals)
+    func_name = func.func_name if six.PY2 else func.__name__
+    return LazyStub(func_name, func, _locals)
 
 
 class LazyStub(object):
@@ -39,6 +42,7 @@ class LazyStub(object):
         if self.__loaded is None:
             self.__load()
         return bool(self.__loaded)
+    __bool__ = __nonzero__
 
     def __load(self):
         assert self.__loaded is None
