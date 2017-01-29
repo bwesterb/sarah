@@ -1,7 +1,7 @@
 sarah Changelog
 ===============
 
-0.1.4 (unreleased)
+0.1.4 (2017-01-29)
 ------------------
 
 - Use zest.releaser
