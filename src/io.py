@@ -165,7 +165,7 @@ class IntSocketFile(object):
         if len(self.read_buffer) != 0:
             ret = self.read_buffer
             self.read_buffer = ''
-            return self.read_bufffer
+            return ret
         rlist, wlist, xlist = select.select(
             [self._sleep_socket_pair[1],
              self.socket], [],
