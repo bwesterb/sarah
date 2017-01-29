@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from setuptools import setup
-from get_git_version import get_git_version
 import os
 import os.path
 
@@ -27,7 +26,7 @@ with open(os.path.join(base_path, 'README.rst')) as f:
 
 
 setup(name='sarah',
-      version=get_git_version(),
+      version='0.1.4dev0',
       description='Library with miscellaneous functionality',
       long_description=long_description,
       author='Bas Westerbaan',
