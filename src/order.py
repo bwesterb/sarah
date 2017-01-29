@@ -7,6 +7,7 @@ def restricted_cover(l, succsOf):
         lut[i] = fzl.intersection(succsOf(i))
     return lambda x: lut[x]
 
+
 def dual_cover(l, succsOf):
     """ <succsOf> assigns to each element of <l> a list of successors.
         This function returns the dual, "predsOf" if you will. """
@@ -17,6 +18,7 @@ def dual_cover(l, succsOf):
         for j in succsOf(i):
             lut[j].append(i)
     return lambda x: lut[x]
+
 
 def sort_by_successors(l, succsOf):
     """ Sorts a list, such that if l[b] in succsOf(l[a]) then a < b """
@@ -40,5 +42,5 @@ def sort_by_successors(l, succsOf):
             if len(rlut[j]) == 0:
                 todo.append(j)
     if nret != len(l):
-        raise ValueError, "Cycle detected"
+        raise ValueError("Cycle detected")
 # vim: et:sta:bs=2:sw=4:

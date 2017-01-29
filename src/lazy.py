@@ -2,6 +2,7 @@
 
 import sys
 
+
 def lazy(func):
     """ Decorator, which can be used for lazy imports
 
@@ -17,12 +18,15 @@ def lazy(func):
         _locals = frame.f_locals
     return LazyStub(func.func_name, func, _locals)
 
+
 class LazyStub(object):
+
     def __init__(self, name, loader, _locals=None):
         self.__loaded = None
         self.__loader = loader
         self.__locals = _locals
         self.__name = name
+
     def __getattribute__(self, attr):
         try:
             return object.__getattribute__(self, attr)
@@ -30,10 +34,12 @@ class LazyStub(object):
             if self.__loaded is None:
                 self.__load()
             return getattr(self.__loaded, attr)
+
     def __nonzero__(self):
         if self.__loaded is None:
             self.__load()
         return bool(self.__loaded)
+
     def __load(self):
         assert self.__loaded is None
         self.__loaded = self.__loader()

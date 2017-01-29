@@ -4,11 +4,12 @@ def unpack_int(s):
     i = 0
     while True:
         b = ord(s[i])
-        ret |= (b & 127) << (i*7)
+        ret |= (b & 127) << (i * 7)
         i += 1
         if b & 128 == 0:
             break
     return ret
+
 
 def pack_int(v):
     """ Returns <v> as packed string. """
@@ -23,6 +24,7 @@ def pack_int(v):
         ret += chr(c)
     return ret
 
+
 def read_packed_int(f):
     """ Reads a packed integer from the fileobj <f>. """
     ret = 0
@@ -34,6 +36,7 @@ def read_packed_int(f):
         if b & 128 == 0:
             break
     return ret
+
 
 def write_packed_int(f, v):
     """ Writes the integer <v> packed to <f>. """

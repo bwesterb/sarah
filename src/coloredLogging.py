@@ -11,20 +11,24 @@ LEVEL_COLORS = {
     'ERROR': ("\033[31m", "\033[0m")
 }
 
+
 class ColoredFormatter(logging.Formatter):
+
     def __init__(self, parent):
         logging.Formatter.__init__(self, None)
         self.parent = parent
+
     def format(self, record):
         levelname = record.levelname
         pref, suf = '', ''
         if levelname in LEVEL_COLORS:
             pref, suf = LEVEL_COLORS[levelname]
-        return pref+self.parent.format(record)+suf
+        return pref + self.parent.format(record) + suf
+
 
 def basicConfig(format=None,
-        formatter=None,
-        level=logging.DEBUG):
+                formatter=None,
+                level=logging.DEBUG):
     if formatter is None:
         if format is None:
             format = "%(levelname)s %(name)s %(message)s"

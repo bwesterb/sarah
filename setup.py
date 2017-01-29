@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
+from setuptools import setup
 from get_git_version import get_git_version
-import os, os.path
+import os
+import os.path
+
 
 def find_package_data():
     base = os.path.join(os.path.dirname(__file__), 'src')
@@ -16,6 +18,7 @@ def find_package_data():
                 r.append(os.path.join(p, c))
     return r
 
+
 setup(name='sarah',
       version=get_git_version(),
       description='Library with miscellaneous functionality',
@@ -26,8 +29,8 @@ setup(name='sarah',
       zip_safe=False,
       package_dir={'sarah': 'src'},
       package_data={'sarah': find_package_data()},
-      install_requires = ['docutils>=0.3',
-                          'mirte>=0.1.2'],
+      install_requires=['docutils>=0.3',
+                        'mirte>=0.1.2'],
       )
 
 # vim: et:sta:bs=2:sw=4:

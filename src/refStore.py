@@ -1,7 +1,4 @@
-from __future__ import with_statement
-
 from mirte.core import Module
-from sarah.event import Event
 
 import weakref
 import threading
@@ -13,16 +10,21 @@ else:
     import weakrefset
     WeakSet = weakrefset.WeakSet
 
+
 class RefStore(Module):
+
     def __init__(self, *args, **kwargs):
         super(RefStore, self).__init__(*args, **kwargs)
         self.namespaces = WeakSet()
+
     def create_namespace(self):
         ret = NameSpace()
         self.namespaces.add(ret)
         return ret
 
+
 class NameSpace(object):
+
     def __init__(self):
         self.obj_to_key = weakref.WeakKeyDictionary()
         self.key_to_obj = weakref.WeakValueDictionary()
